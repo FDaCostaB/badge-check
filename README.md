@@ -10,7 +10,10 @@ Additionally, you can create a parallel function that converts the given image (
 
 ## How to run ?
 
-In the project directory, you can run:
+### 0. Install npm
+
+Follow instrucitons to install npm : https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+
 ### 1. `npm install`
 
 Install the dependencies of the react project.
