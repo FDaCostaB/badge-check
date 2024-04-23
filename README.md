@@ -11,8 +11,11 @@ Additionally, you can create a parallel function that converts the given image (
 ## How to run ?
 
 In the project directory, you can run:
+### 1. `npm install`
 
-### `npm start`
+Install the dependencies of the react project.\
+
+### 2.`npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
