@@ -40,6 +40,44 @@ function CheckButton(url) {
 		return centeredX * centeredX + centeredY * centeredY <= radius * radius;
 	}
 	
+	/// <summary>
+    /// Convert a RGB to HSV color
+    /// </summary>
+	/// <param name="r">red channel of the input color in range [0,255]</param>
+	/// <param name="g">green channel of the input color in range [0,255]</param>
+	/// <param name="b">blue channel of the input color in range [0,255]</param>
+    /// <returns>A HSV color with h in range [0,360], s in range [0,100] and V in range [0,100]</returns>
+	//Source : https://stackoverflow.com/questions/17242144/javascript-convert-hsb-hsv-color-to-rgb-accurately
+	function RGBtoHSV(r, g, b) {
+
+		var max = Math.max(r, g, b);
+		var min = Math.min(r, g, b);
+		var d = max - min;
+		var h;
+		var s = (max === 0 ? 0 : d / max);
+		var v = max / 255;
+		
+		switch(max){
+			case min: 
+				h = 0;
+				break;
+			case r: 
+				h = (g - b) + d * (g < b ? 6: 0);
+				h /= 6 * d;
+				break;
+			case g: 
+				h = (b - r) + d * 2;
+				h /= 6 * d; 
+				break;
+			case b: 
+				h = (r - g) + d * 4;
+				h /= 6 * d; 
+				break;
+		}
+
+		return {h: h * 360, s: s * 100, v: v * 100};
+	}
+	
     /// <summary>
     /// Check if the image loaded is of size 512x512, the only non transparent pixels are within a circle, and that the colors is the badge give a "happy" feeling
     /// </summary>
@@ -79,6 +117,11 @@ function CheckButton(url) {
 			console.log("Radius: " + radius);
 		}
 		
+		let r = 0;
+		let g = 0;
+		let b = 0;
+		let sum = 0;
+	
 		for(let y = 0; y < img.height; y++){
 			for(let x = 0; x < img.width; x++){
 				let pixelIdx = pixelCoordinate(x, y);
@@ -87,8 +130,47 @@ function CheckButton(url) {
 					setCheckResult(false);
 					return;
 				}
+				
+				// Averaging color of the picture
+				let pixelR = data[(pixelIdx * 4) + RED] * (data[(pixelIdx * 4) + ALPHA] / 255);
+				let pixelG = data[(pixelIdx * 4) + GREEN] * (data[(pixelIdx * 4) + ALPHA] / 255);
+				let pixelB = data[(pixelIdx * 4) + BLUE] * (data[(pixelIdx * 4) + ALPHA] / 255);
+				
+				sum += data[(pixelIdx * 4) + ALPHA] / 255;
+				
+				
+				// Averaging square gives more natural result aand tends to preserve a correct brightness
+				// Brightness is important to determine color happiness later on
+				// Color space works should account for how human perceive them
+				// https://www.youtube.com/watch?v=LKnqECcg6Gw
+				r += pixelR * pixelR;
+				g += pixelG * pixelG;
+				b += pixelB * pixelB;
 			}
 		}
+		
+		//The root of the value sould be use
+		r = Math.sqrt(r / sum);
+		g = Math.sqrt(g / sum);
+		b = Math.sqrt(b / sum);
+		
+		//Conversion to HSV as it is easier to make assumption upon HSV values in my opinion
+		console.log("Average color RGB: ("+ parseInt(r)+", "+parseInt(g)+", "+parseInt(b)+")");
+		let hsvColor = RGBtoHSV(r, g, b);
+		console.log("Average color HSV: ("+ parseInt(hsvColor.h)+", "+parseInt(hsvColor.s)+", "+parseInt(hsvColor.v)+")");
+		
+		// Magenta, Red, Orange, Yellow get accepted and the rest rejected
+		if( parseInt(hsvColor.h) < 300 && parseInt(hsvColor.h) > 90){ 
+			setCheckResult(false);
+			return;
+		}
+		
+		// Colors bellow 75% value(brightness) gets rejected because dark color are not happy
+		if( parseInt(hsvColor.v) < 75){
+			setCheckResult(false);
+			return;
+		}
+		
 		setCheckResult(true);
 		return;
 	}
