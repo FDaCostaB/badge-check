@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Instructions
+
+We want users to upload a badge: an avatar within a circle. Create a function taking a PNG as input and verifying that:
+*Size = 512x512*
+*The only non transparent pixels are within a circle*
+*That the colors of the badge give a "happy" feeling*
+Additionally, you can create a parallel function that converts the given image (of any format) into the specified object. (Not implemented)
+
 ## How to run ?
 
 In the project directory, you can run:
