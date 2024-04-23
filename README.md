@@ -8,11 +8,11 @@ We want users to upload a badge: an avatar within a circle. Create a function ta
 *That the colors of the badge give a "happy" feeling*\
 Additionally, you can create a parallel function that converts the given image (of any format) into the specified object. (Not implemented)
 
-## How to run ?
+## How to run?
 
 ### 0. Install npm
 
-Follow instrucitons to install npm : https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+Follow instructions to install npm: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 
 ### 1. `npm install`
 
