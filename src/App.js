@@ -1,25 +1,23 @@
-import logo from './logo.svg';
+import React, { useState } from "react";
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [badgeURL, setBadgeURL] = useState();
+    function handleChange(e) {
+		if (e.target.files.length >= 1){
+			setBadgeURL(URL.createObjectURL(e.target.files[0]));
+		}
+    }
+ 
+    return (
+        <div className="App Container">
+            <h2>Badge check:</h2>
+            <input type="file" accept="image/png" onChange={handleChange} />
+			<div className="badge-display">
+				<img src={badgeURL} alt='Badge'/>
+			</div>
+        </div>
+    );
 }
 
 export default App;

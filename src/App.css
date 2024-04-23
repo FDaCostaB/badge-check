@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin: 35px;
 }
 
 .App-logo {
@@ -26,6 +27,7 @@
 
 .App-link {
   color: #61dafb;
+  
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +37,15 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.Container {
+  margin: 0 auto;
+}
+
+.badge-display {
+	width: 512px;
+	height: 512px;
+	border: 1px solid #ccc;
+	margin: 0 auto;
 }
