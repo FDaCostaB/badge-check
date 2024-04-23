@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import './App.css';
+import CheckButton from "./CheckButton.js";
+import styles from './App.css';
 
 function App() {
     const [badgeURL, setBadgeURL] = useState();
@@ -16,6 +17,7 @@ function App() {
 			<div className="badge-display">
 				<img src={badgeURL} alt='Badge'/>
 			</div>
+			<CheckButton url={badgeURL}/>
         </div>
     );
 }
