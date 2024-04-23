@@ -13,7 +13,7 @@ Additionally, you can create a parallel function that converts the given image (
 In the project directory, you can run:
 ### 1. `npm install`
 
-Install the dependencies of the react project.\
+Install the dependencies of the react project.
 
 ### 2.`npm start`
 
